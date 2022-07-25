@@ -21,23 +21,19 @@ router.post("/", async (req, res) => {
     try {
       let folderName = req.params.query;
       console.log(folderName);
-      let openFolder = folderLogic.readFolder(folderName);
-      console.log("after logic==" + folderName);
-      console.log(openFolder);
-      res.send(openFolder);
+      if(folderName === "uploads"){
+        let myfolders = folderLogic.readall();
+       res.send(myfolders);
+      }else{
+        let openFolder = folderLogic.readFolder(folderName);
+        console.log("after logic==" + folderName);
+        console.log(openFolder);
+        res.send(openFolder);
+      }
     } catch (err) {
       res.status(400).json(err || "errpr");
     }
   });
-  // ======================================================================הבאת כל התקיות
-  // router.get("/folders", async (req, res) => {
-  //   console.log("in foldersss");
-  //   try {
-  //     let myfolders = folderLogic.readall();
-  //     res.send(myfolders);
-  //   } catch (err) {
-  //     res.status(400).json(err || "errpr");
-  //   }
-  // });
+  
 
   module.exports = router;

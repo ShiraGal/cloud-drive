@@ -8,7 +8,7 @@ import FilesList from './component/FilesList';
 import Folders from "./component/Folders";
 
 function App() {
-  
+
 
   return (
     <div className="App">
@@ -16,8 +16,8 @@ function App() {
       <BrowserRouter> 
       <Routes>
         <Route path="/" element= {<Layout />} />
-        {/* <Route path="/:folderName" element={<FilesList />} /> */}
-        <Route path="/:folderName" element={<Folders />} />
+        <Route path="/:folderName" element={<FilesList />} />
+        {/* <Route path="/:folderName" element={<Folders />} /> */}
       </Routes>
     </BrowserRouter> 
     </div>

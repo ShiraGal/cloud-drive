@@ -35,5 +35,15 @@ function createFolder(folderName){
   }
   //________________________________________________________הבאת כל התקיות
 
+  function readall() {
+    try{
+        let inFolder = fs.readdirSync("./uploads");
+        console.log("inFolder= "+inFolder);
+        return inFolder
+    }
+    catch(error){
+      console.log("can't read");
+    }
+  }
 
   module.exports = {createFolder, readFolder, readall };

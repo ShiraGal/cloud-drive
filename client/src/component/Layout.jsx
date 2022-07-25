@@ -25,7 +25,7 @@ export default function Layout() {
     addFolder(myFolder);
 
     axios
-      .post("http://localhost:3601/folders", { folderName: myFolder })
+      .post("http://localhost:3601//folders", { folderName: myFolder })
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
@@ -92,10 +92,10 @@ export default function Layout() {
       </div>
       <br></br>
       <Folders Folders={[foldersList, setFoldersList]} />
-      <FilesList
+      {/* <FilesList
         uploadFilename={uploadFilename}
         files={[filesList, setFilesList]}
-      />
+      /> */}
     </>
   );
 }
