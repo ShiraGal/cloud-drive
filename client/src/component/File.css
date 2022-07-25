@@ -1,0 +1,28 @@
+.file-oneFile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    height: 125px;
+    width: 100px;
+    border-color: cadetblue;
+    padding: 2%;
+    margin: 4px;
+}
+
+.file-options{
+    display: flex;
+    justify-content: space-between;
+    bottom: 0%;
+    height: 30px;
+}
+
+.file-delete, .file-update, .file-details, .file-dounload {
+    cursor: pointer;
+    transition: .3s;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
