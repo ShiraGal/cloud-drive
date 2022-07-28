@@ -5,3 +5,23 @@
     width: 94%;
     align-items:center ;
 }
+
+.filelist-files{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 94%;
+    align-items:center ;
+}
+
+.folders-area button{
+    display: flex;
+    justify-content: center;
+    background-color: palegoldenrod;
+    border-color:  palegoldenrod;
+    height: 25px;
+    width: 135px;
+    padding: 2%;
+    margin: 4px;
+    align-items: center;
+}

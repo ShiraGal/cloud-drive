@@ -39,14 +39,15 @@ router.post(
     }
   }
 );
+// http://localhost:3601/files/${filePath}
 // ======================================================================לקרוא קובץ
-router.get("/file/:query", async (req, res) => {
-  console.log("in router read");
+router.get("/:query", async (req, res) => {
+  console.log("in router read file");
   try {
-    console.log(req.params.query);
-    let filename = req.params.query;
-    console.log(filename);
-    let openFile = fileLogic.read(filename);
+    console.log(req.params.query +"  --filePath from router");
+    let filePath = req.params.query;
+    console.log(filePath);
+    let openFile = fileLogic.read(filePath);
     console.log("after logic==" + openFile);
     res.send(openFile);
   } catch (err) {

@@ -3,9 +3,9 @@ const fs = require("fs"); //יבוא של אףאס
 
 // פונקציות לשימוש:
 
-function isExist(filename) {
+function isExist(filePath) {
   console.log("exist??");
-  return fs.existsSync("./uploads/" + filename);
+  return fs.existsSync("./uploads/" + filePath);
 }
 function isValidName(filename = "") {
   return ["/", "\\", "*", ":", "|", "?", "<", ">", '"'].find((char) =>
@@ -36,39 +36,6 @@ function isValid(req, res, next) {
   }
 }
 
-// //_______________________________________________________יצירת תקייה
-
-// function createFolder(folderName){
-//   try {
-//     console.log("try to fs folder");
-//     console.log(folderName);
-//     if (!fs.existsSync(folderName)) {
-//       fs.mkdirSync("./uploads/"+folderName);
-//       console.log("!!!!");
-//     }else{
-//       throw error
-//     }
-//   } catch (error) {
-//     console.error("cant create folder");
-//   }
-// }
-// //_______________________________________________________ קריאת תקייה
-
-// function readFolder(folderName) {
-//   try{
-//       console.log("logic folder read "+folderName);
-//       let folderPath = "./uploads/"+folderName
-//       let inFolder = fs.readdirSync(folderPath);
-//       console.log(inFolder);
-//       return inFolder
-//   }
-//   catch(error){
-//     console.log("can't read");
-//   }
-
-// }
-
-// const folderPath = '/Users/joe';
 //_______________________________________________________יצירת קובץ
 function create(filename, content) {
   console.log("logic");
@@ -95,12 +62,12 @@ const update = (filename, content) => {
   }
 };
 //_______________________________________________________ קריאת קובץ
-const read = (filename) => {
+const read = (filePath) => {
   try {
     console.log("in logic read");
-    if (isExist(filename)) {
+    if (isExist(filePath)) {
       console.log("in if logic read");
-      let result = fs.readFileSync("./uploads/" + filename, { encoding: "utf8" });
+      let result = fs.readFileSync("./uploads/" + filePath, { encoding: "utf8" });
       return result
     } else {
       throw error;

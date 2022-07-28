@@ -4,20 +4,20 @@ import File from "./File"
 import { useEffect, useState } from "react";
 
 export default function FilesList(props) {
-  let folderName= props.folderName
+  let foldername= props.folderName
   const [filesList, setFilesList] = useState([]);
 
   useEffect(()=>{
     const result = axios.get(
-      `http://localhost:3601/folders/${folderName}`
-    ).then((result) => console.log(result.data));
+      `http://localhost:3601/folders/${foldername}`
+    ).then((result) => setFilesList(result.data));
   },[])
 
 
   return (
     <>
-      <div className="filelist-files">{folderName}
-        {/* {filesList.map(file => <File filename={file}></File>)} */}
+      <div className="filelist-files">
+        {filesList.map(file => <File filename={file} foldername={foldername}></File>)}
       </div>
     </>
   )
