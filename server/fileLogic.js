@@ -5,7 +5,7 @@ const fs = require("fs"); //יבוא של אףאס
 
 function isExist(filePath) {
   console.log("exist??");
-  return fs.existsSync("./uploads/" + filePath);
+  return fs.existsSync(filePath);
 }
 function isValidName(filename = "") {
   return ["/", "\\", "*", ":", "|", "?", "<", ">", '"'].find((char) =>
@@ -17,7 +17,7 @@ function isValidName(filename = "") {
 function isValidExtantions(filename = "") {
   let ext = filename.slice(filename.lastIndexOf(".") + 1);
   console.log(filename);
-  return ["pdf", "txt", "png", "jpg", "js", "html", "css", "jsx", "ts"].find(
+  return ["pdf", "jpg","docx","mp3"].find(
     (char) => ext == char
   )
     ? true
@@ -37,12 +37,12 @@ function isValid(req, res, next) {
 }
 
 //_______________________________________________________יצירת קובץ
-function create(filename, content) {
+function create(path, content) {
   console.log("logic");
   try {
-    if (!isExist(filename)) {
-      console.log("under isExist--- "+filename);
-      fs.writeFileSync("./uploads/"+filename, content);
+    if (!isExist(path)) {
+      console.log("under isExist--- "+path);
+      fs.writeFileSync(path, content);
     } else {
       console.log("create");
       throw error;
@@ -61,14 +61,17 @@ const update = (filename, content) => {
     console.log("can't add");
   }
 };
-//_______________________________________________________ קריאת קובץ
+
+
+
+//_______________________________________________________ הורדת קובץ
 const read = (filePath) => {
   try {
     console.log("in logic read");
     if (isExist(filePath)) {
       console.log("in if logic read");
-      let result = fs.readFileSync("./uploads/" + filePath, { encoding: "utf8" });
-      return result
+      let res = fs.readFileSync(filePath, { encoding: "utf8" });
+      return res
     } else {
       throw error;
     }
@@ -77,8 +80,25 @@ const read = (filePath) => {
   }
 };
 //_______________________________________________________מחיקת קובץ
-const remove = (filename) => {
-  fs.rmSync("./files/" + filename);
+const remove = (filePath) => {
+  try{
+    console.log("in if logic remove  "+filePath)
+    fs.unlinkSync("./"+filePath)
+  }catch (error){
+    console.log("can't remove");
+  }
 };
+//_______________________________________________________
+const rename = (newPath, pastPath)=>{
+  try{
+    console.log("in logic rename!  "+newPath)
+    let res = fs.renameSync(`./${pastPath}`, `./${newPath}`) //TODO- יש פה בעיה
+    return res
+  }catch (error){
+    console.log("can't rename...");
+  }
+}
 
-module.exports = { create, read, update, remove, isValid };
+
+
+module.exports = { create, read, update, remove, isValid, rename };

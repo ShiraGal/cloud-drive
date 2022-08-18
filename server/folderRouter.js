@@ -20,10 +20,11 @@ router.post("/", async (req, res) => {
     console.log("in router read folder");
     try {
       let folderName = req.params.query;
-      console.log(folderName);
+      console.log(folderName+ "  the folder");
       if(folderName === "uploads"){
-        let myfolders = folderLogic.readall();
-       res.send(myfolders);
+        let myfolders = folderLogic.readall().foldersOnly;
+        let myOutFils = folderLogic.readall().filsOnly;
+       res.send({myfolders, myOutFils});
       }else{
         let openFolder = folderLogic.readFolder(folderName);
         console.log("after logic==" + folderName);

@@ -4,22 +4,31 @@ import { useState } from 'react'
 import './App.css'
 import  axios  from 'axios';
 import Layout from './component/Layout';
+import Header from "./component/Header";
 import FilesList from './component/FilesList';
 import Folders from "./component/Folders";
+import { FilesContext } from "./context/FilesContext";
+import { FoldersContext} from "./context/FoldersContext"
 
 function App() {
 
+const [filesList, setFilesList]= useState([])
+const [foldersList, setFoldersList]= useState([])
 
   return (
     <div className="App">
-      {/* <Layout /> */}
+      <FoldersContext.Provider value={{ foldersList, setFoldersList }}>
+      <FilesContext.Provider value={{ filesList, setFilesList }}>
       <BrowserRouter> 
+      
       <Routes>
         <Route path="/" element= {<Layout />} />
         <Route path="/:folderName" element={<FilesList />} />
         {/* <Route path="/:folderName" element={<Folders />} /> */}
       </Routes>
     </BrowserRouter> 
+        </FilesContext.Provider>
+        </FoldersContext.Provider>
     </div>
   )
 }

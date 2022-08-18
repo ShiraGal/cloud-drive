@@ -9,17 +9,19 @@ const fileLogic = require("./fileLogic");
 
 
 
-// ======================================================================יצירת קובץ
-// router.post('/',async (req,res)=>{
-//     console.log("in rout");
-//     try{
-//          await fileLogic.create(req.body.filename, req.body.content)
-//          res.send("seccess")
-//     }
-//     catch(err){
-//         res.status(400).json(err || 'errpr')
-//     }
-// })
+// ======================================================================קריאת פרטי קובץ
+router.get("/readDetails", async (req, res) => {
+  console.log("in router readDetails file");
+  try {
+    console.log(req.query.key +"  --filePath from readDetails router");
+    let filePath = req.query.key;
+    const res = fileLogic.read(filePath);
+    console.log("after logic readDetails == " +res);
+    res.send(res)
+  } catch (err) {
+    res.status(400).json(err || "errpr");
+  }
+});
 
 // ======================================================================להעלות קובץ
 router.post(
@@ -28,11 +30,15 @@ router.post(
   fileLogic.isValid,
   async (req, res) => {
     console.log("in router");
+    const pathHere = req.headers.path
+    const { file } = req;
+    const path = `${pathHere}/${file.originalname}`
+    console.log(path); 
     try {
-      const { file } = req;
-      fileLogic.create(file.originalname, file.buffer);
+      // console.log(req);
+      fileLogic.create(path, file.buffer);
       console.log("in try upload");
-      res.sendStatus(200);
+      res.send("Ok");
     } catch (err) {
       console.log("router error");
       res.status(400).json(err || "errpr");
@@ -40,24 +46,52 @@ router.post(
   }
 );
 // http://localhost:3601/files/${filePath}
-// ======================================================================לקרוא קובץ
-router.get("/:query", async (req, res) => {
+// ======================================================================הורדת קובץ 
+router.get("/download", async (req, res) => {
   console.log("in router read file");
   try {
-    console.log(req.params.query +"  --filePath from router");
-    let filePath = req.params.query;
-    console.log(filePath);
-    let openFile = fileLogic.read(filePath);
-    console.log("after logic==" + openFile);
-    res.send(openFile);
+    console.log(req.query.key +"  --filePath from router");
+    let filePath = req.query.key;
+    fileLogic.read(filePath);
+    // console.log("after logic==" + openFile);
+    res.download(filePath)
   } catch (err) {
     res.status(400).json(err || "errpr");
   }
 });
 
 // ======================================================================למחוק קובץ
+router.get("/remove", async (req, res) => {
+  console.log("in router delete file");
+  try {
+    console.log(req.query.key +"  --filePath from remove router");
+    let filePath = req.query.key;
+    fileLogic.remove(filePath);
+    console.log("after logic remove ==");
+    res.send(true)
+  } catch (err) {
+    res.status(400).json(err || "errpr");
+  }
+});
+// TODO- הקאוורי פה לא קולט אם הקובץ בתוך תקייה.
 
-
+// ======================================================================לשנות שם קובץ
+router.put("/rename", async (req, res) => {
+  console.log("in router rename file");
+ 
+  console.log(req.body);
+  console.log(req.body.pastPath +"  --pastPath");
+  console.log(req.body.newPath +"  --newPath");
+  try {
+    let pastPath = req.body.pastPath;
+    let newPath = req.body.newPath;
+    fileLogic.rename(newPath, pastPath);
+    console.log("after logic rename!");
+    res.send(newPath)
+  } catch (err) {
+    res.status(400).json(err || "errpr");
+  }
+})
   
 
 module.exports = router;

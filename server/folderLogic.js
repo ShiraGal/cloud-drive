@@ -38,8 +38,20 @@ function createFolder(folderName){
   function readall() {
     try{
         let inFolder = fs.readdirSync("./uploads");
+        const foldersOnly =[];
+        const filsOnly = [];
+        inFolder.forEach(f => {
+          if(fs.lstatSync("./uploads/"+f).isDirectory()){
+            foldersOnly.push(f)
+          }else{
+            filsOnly.push(f)
+          }
+        })
+        // let foldersOnly = inFolder.forEach(f => fs.lstatSync("./uploads/"+f).isDirectory())
         console.log("inFolder= "+inFolder);
-        return inFolder
+        console.log("foldersOnly= "+foldersOnly);
+        console.log("filsOnly= "+filsOnly);
+        return {foldersOnly , filsOnly}
     }
     catch(error){
       console.log("can't read");

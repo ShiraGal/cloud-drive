@@ -2,12 +2,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f9f9f9;
-    height: 125px;
-    width: 100px;
+    background-color: white;
+    /* height: 145px; */
+    width: 110px;
     border-color: cadetblue;
     padding: 2%;
-    margin: 4px;
+    margin: 6px;
+}
+
+.file-text{
+    width: 90%;
+        height: 23px;
+    word-break:break-all;
+ /* white-space: nowrap; */
+ /* width: 200px;
+ height: 65px;
+ border: 1px solid black;
+ overflow: hidden; */
 }
 
 .file-options{
@@ -17,6 +28,17 @@
     height: 30px;
 }
 
+.file-options img{
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    border-radius: 13%;
+}
+
+.file-options img:hover{
+box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.6);
+}
+/* 
 .file-delete, .file-update, .file-details, .file-dounload {
     cursor: pointer;
     transition: .3s;
@@ -24,5 +46,5 @@
     transition-duration: 0.3s;
     transition-timing-function: ease;
     transition-delay: 0s;
-}
+} */
 

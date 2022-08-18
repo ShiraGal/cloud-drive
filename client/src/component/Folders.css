@@ -17,11 +17,14 @@
 .folders-area button{
     display: flex;
     justify-content: center;
-    background-color: palegoldenrod;
-    border-color:  palegoldenrod;
+    background-color: rgb(255, 241, 164);
     height: 25px;
     width: 135px;
     padding: 2%;
     margin: 4px;
     align-items: center;
+}
+
+.folderImg{
+    margin-left: 5%;
 }
