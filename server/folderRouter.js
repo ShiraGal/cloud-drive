@@ -4,15 +4,16 @@ const multer = require("multer");
 // const upload = multer();
 const folderLogic = require("./folderLogic");
 
+
 // ======================================================================יצירת תקייה
 router.post("/", async (req, res) => {
     try {
       console.log(req.body.folderName);
       await folderLogic.createFolder(req.body.folderName);
-      res.send("new folser seccess");
-    } catch (err) {
+      res.send("new folder seccess");
+    } catch (error) {
       console.log("router folder error");
-      res.status(400).json(err || "error");
+      res.status(error.status || 400).json(error.message);
     }
   });
   // ======================================================================קריאת תקייה
@@ -35,6 +36,21 @@ router.post("/", async (req, res) => {
       res.status(400).json(err || "errpr");
     }
   });
+
+  // ======================================================================מחיקת תקייה
+  router.get("/", async (req, res) => {
+    console.log("bliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    try {
+      console.log(req.query.key +"  --folderPath to delete");
+      let folderPath = req.query.key;
+      folderLogic.remove(folderPath);
+      console.log("after logic remove ==");
+      res.send(true)
+    } catch (err) {
+      res.status(400).json(err || "errpr");
+    }
+  });
+  
   
 
   module.exports = router;

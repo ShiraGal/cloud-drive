@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from 'react'
 import './App.css'
 import  axios  from 'axios';
-import Layout from './component/Layout';
-import Header from "./component/Header";
-import FilesList from './component/FilesList';
-import Folders from "./component/Folders";
+import Layout from './component/layout/Layout';
+import Header from './component/header/Header'
+import FilesList from './component/fileList/FilesList';
+import Folders from "./component/folders/Folders";
 import { FilesContext } from "./context/FilesContext";
 import { FoldersContext} from "./context/FoldersContext"
 

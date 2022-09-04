@@ -1,25 +1,26 @@
-const { error, log } = require("console");
+// const { error, log } = require("console");
 const fs = require("fs"); 
+const { ErrorModel } = require("./helpers/errorModel");
 
 
 
-//_______________________________________________________יצירת תקייה
+//_______________________________________________________create folder
 
 function createFolder(folderName){
-    try {
+   
       console.log("try to fs folder");
       console.log(folderName);
       if (!fs.existsSync(folderName)) {
         fs.mkdirSync("./uploads/"+folderName);
         console.log("!!!!");
       }else{
-        throw error
+        throw new ErrorModel(
+          400,
+          "folder name is exist. Enter new name")
       }
-    } catch (error) {
-      console.error("cant create folder");
-    }
+  
   }
-  //_______________________________________________________ קריאת תקייה
+  //_______________________________________________________ read folder
   
   function readFolder(folderName) {
     try{
@@ -33,7 +34,7 @@ function createFolder(folderName){
       console.log("can't read");
     }
   }
-  //________________________________________________________הבאת כל התקיות
+  //________________________________________________________read all folders
 
   function readall() {
     try{
@@ -47,7 +48,6 @@ function createFolder(folderName){
             filsOnly.push(f)
           }
         })
-        // let foldersOnly = inFolder.forEach(f => fs.lstatSync("./uploads/"+f).isDirectory())
         console.log("inFolder= "+inFolder);
         console.log("foldersOnly= "+foldersOnly);
         console.log("filsOnly= "+filsOnly);
@@ -57,5 +57,19 @@ function createFolder(folderName){
       console.log("can't read");
     }
   }
+//________________________________________________________delete folders
 
-  module.exports = {createFolder, readFolder, readall };
+function remove(folderPath){
+  console.log("logic folder remove "+folderPath);
+  try{
+   fs.rmdirSync("./"+folderPath);
+    // console.log("after fs");
+    // return inFolder
+}
+catch(error){
+  console.log("can't remove");
+}
+}
+
+
+  module.exports = {createFolder, readFolder, readall, remove };
