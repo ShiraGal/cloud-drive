@@ -7,16 +7,20 @@ import Layout from './component/layout/Layout';
 import Header from './component/header/Header'
 import FilesList from './component/fileList/FilesList';
 import Folders from "./component/folders/Folders";
+import ErrorPage from "./ErrorPage"
 import { FilesContext } from "./context/FilesContext";
 import { FoldersContext} from "./context/FoldersContext"
+import { ApiContext } from "./context/ApiContext";
 
 function App() {
 
+  const serverURL = "http://localhost:3601";
 const [filesList, setFilesList]= useState([])
 const [foldersList, setFoldersList]= useState([])
 
   return (
     <div className="App">
+      <ApiContext.Provider value={serverURL}>
       <FoldersContext.Provider value={{ foldersList, setFoldersList }}>
       <FilesContext.Provider value={{ filesList, setFilesList }}>
       <BrowserRouter> 
@@ -24,11 +28,12 @@ const [foldersList, setFoldersList]= useState([])
       <Routes>
         <Route path="/" element= {<Layout />} />
         <Route path="/:folderName" element={<FilesList />} />
-        {/* <Route path="/:folderName" element={<Folders />} /> */}
+        <Route path="*" element={<ErrorPage/>} />
       </Routes>
     </BrowserRouter> 
         </FilesContext.Provider>
         </FoldersContext.Provider>
+        </ApiContext.Provider>
     </div>
   )
 }

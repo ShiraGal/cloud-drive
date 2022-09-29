@@ -6,6 +6,8 @@ import { FoldersContext } from "../../context/FoldersContext";
 import { FilesContext } from "../../context/FilesContext";
 import { useNavigate } from "react-router-dom";
 import Popup from "../popup/Popup";
+import { ApiContext } from "../../context/ApiContext";
+import cloudImg from "../../icons/cloud.png"
 
 export default function Header(props) {
 
@@ -13,13 +15,14 @@ export default function Header(props) {
   const inFolder =  props.inFolder
   const { foldersList, setFoldersList } = useContext(FoldersContext);
   const { filesList, setFilesList } = useContext(FilesContext);
+  const serverURL = useContext(ApiContext);
   const [popup, setPopup] = useState(false)
   const [filename, setFilename] = useState();
   const [selectFile, setSelectFile] = useState();
   const [myFolder, setMyFolder] = useState();
   const [mg, setMg] = useState();
+  const [options, setOptions] = useState("close");
   const navigate = useNavigate();
-
 
   //   --------------------------------------------  add folder
 
@@ -31,7 +34,7 @@ export default function Header(props) {
   const handelSubmitFolder = () => {
     if (myFolder){
       axios
-        .post("http://localhost:3601/folders", { folderName: myFolder })
+        .post(`${serverURL}/api/folders`, { folderName: myFolder })
         // .then((response) => response.json())
         .then((data) => console.log(data))
         .catch((error) => console.log(error));
@@ -56,7 +59,7 @@ export default function Header(props) {
   console.log("handelSubmit file");
     if(mg < 9000){
       await axios
-        .post("http://localhost:3601/files/upload", formData, {headers:{path : `./${pathHere}`}})
+        .post(`${serverURL}/api/files/upload`, formData, {headers:{path : `./${pathHere}`}})
         // .then((response) => response.json())
         .then((data) => console.log(data))
         .catch((error) => setPopup(error.response.data));
@@ -77,7 +80,7 @@ export default function Header(props) {
     if(inFolder.length === 0){
       console.log("remove folder from here:");
       axios
-      .get(`http://localhost:3601/folders?key=${pathHere}`)
+      .get(`${serverURL}/api/folders?key=${pathHere}`)
           .then((res) => console.log(res))  
           navigate("/");
     }else{
@@ -85,11 +88,26 @@ export default function Header(props) {
     }
     }
     
-  
+  //   --------------------------------------------
+    const addOptions= ()=>{
+if (options === "open") {
+  setOptions("close")
+}else{
+  setOptions("open")
+}
+    }
+  //   --------------------------------------------
 
   return (
-    <div className="layout-head">
-      <div className="layout-head-continer">
+    <>
+    {/* <div className="layout-head"> */}
+      <div className={options==="open"? "opacity" : "head-mobile"}>
+      <div className="logo-cloud"><img src={cloudImg}></img>Gal Cloud</div>
+      <button className="add-options" onClick={()=>addOptions()} id={options==="open"? "close-options" : null}>+</button>
+      </div>
+      {options==="open"?
+      // <div className="layout-head-continer">
+      <div className="layout-head-inContiner">
         {inFolder ? <button onClick={()=>handelDeleteFolder(pathHere)}> Delete folder </button> : 
         <div className="layout-folder-area">
           <button id="addFolder" onClick={handelSubmitFolder}>
@@ -111,8 +129,12 @@ export default function Header(props) {
           ></input>
           <button id="head-upload-file" onClick={handelSubmit}> upload file </button>
         </div>
-      </div>
+        {/* </div>  */}
+      </div> : null}
       <Popup state={[popup, setPopup]}/>
-    </div>
+    {/* </div> */}
+    </>
   );
 }
+
+

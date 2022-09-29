@@ -30,7 +30,11 @@ router.post("/", async (req, res) => {
         let openFolder = folderLogic.readFolder(folderName);
         console.log("after logic==" + folderName);
         console.log(openFolder);
-        res.send(openFolder);
+        if(openFolder){
+          res.send(openFolder);
+        }else{
+          throw err
+        }
       }
     } catch (err) {
       res.status(400).json(err || "errpr");

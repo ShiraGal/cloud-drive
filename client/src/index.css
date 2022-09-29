@@ -28,14 +28,6 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  /* background-color: #f9f9f9; */
-  /* margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh; */
-}
 
 h1 {
   font-size: 3.2em;
@@ -45,22 +37,13 @@ h1 {
 button {
   border-radius: 80px;
   width: 133px;
-  /* margin: 0px; */
-  /* border: 1px solid transparent; */
-  /* padding: 0.6em 0.2em; */
   font-size: 1em;
-  /* font-weight: 500; */
-  /* font-family: 'Quicksand', sans-serif; */
-  /* background-color: #1a1a1a; */
   cursor: pointer;
   transition:  0.25s;
   height: 40px;
 }
 button:hover {
-  /* transition: .3s; */
-  width: 150px;
-  /* text-shadow: 0 0 1px #242424; */
-  /* text-shadow: 0px 0px 0px black, 0 0 25px #f9f9f9, 0 0 10px #242424; */
+border: #f9f9f9;
 }
 
 
@@ -68,12 +51,17 @@ button:hover {
   :root {
     color: #213547;
     background-color: rgba(0, 0, 0, 0.05);
-    /* background-color: #ffffff; */
   }
   a:hover {
     color: #747bff;
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media (max-width: 600px){
+  :root{
+    padding: 0px;
   }
 }

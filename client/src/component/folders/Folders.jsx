@@ -5,6 +5,7 @@ import axios from "axios";
 import folderImg from "../../icons/folderImg.png"
 import { useContext } from "react";
 import { FoldersContext } from "../../context/FoldersContext";
+import { ApiContext } from "../../context/ApiContext";
 
 export default function Folders(props) {
   const folder = props.folder;
@@ -12,6 +13,8 @@ export default function Folders(props) {
   const [onRenameFolder, setOnRenameFolder] = useState("close");
   const [changeFolderame, setChangeFoldername] = useState();
   const navigate = useNavigate();
+  const serverURL = useContext(ApiContext);
+
   //================================================================== קריאת קבצים שבתוך תקייה
 
   const handelOpenFolder = (folder) => {
@@ -21,7 +24,7 @@ export default function Folders(props) {
   // ---------------------------------------------------------rename folder
   const renameFolder = async (folder) => {
     console.log("rename folder from here:");
-    const res = await axios.put("http://localhost:3601/files/rename", {
+    const res = await axios.put(`${serverURL}/api/files/rename`, {
       pastPath: `uploads/${folder}`,
       newPath: `uploads/${changeFolderame}`,
     });

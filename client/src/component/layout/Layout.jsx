@@ -8,6 +8,8 @@ import { FoldersContext } from "../../context/FoldersContext";
 import { FilesContext } from "../../context/FilesContext";
 import File from "../file/File";
 import { useNavigate } from "react-router-dom";
+import { ApiContext } from "../../context/ApiContext";
+
 
 export default function Layout() {
   const { foldersList, setFoldersList } = useContext(FoldersContext);
@@ -15,12 +17,13 @@ export default function Layout() {
   const [showFoldersList, setShowFoldersList] = useState([]);
   const [showFilesList, setShowFilesList] = useState([]);
   const navigate = useNavigate();
+  const serverURL = useContext(ApiContext);
 
   //================================================================== read main folder- "uploads"
 
   useEffect(() => {
     const result = axios
-      .get(`http://localhost:3601/folders/uploads`)
+      .get(`${serverURL}/api/folders/uploads`)
       .then((result) => {
         setShowFoldersList(result.data.myfolders);
         setShowFilesList(result.data.myOutFils);
